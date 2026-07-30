@@ -15,6 +15,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
+import ViewKanbanIcon from "@mui/icons-material/ViewKanban";
 
 import { NavLink } from "react-router-dom";
 import Logo from "./Logo";
@@ -43,6 +44,11 @@ const menuItems = [
     path: "/team",
   },
   {
+    title: "Kanban",
+    icon: <ViewKanbanIcon />,
+    path: "/kanban",
+  },
+  {
     title: "Calendar",
     icon: <CalendarMonthIcon />,
     path: "/calendar",
@@ -68,7 +74,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
             sx={{
               mx: 1.5,
               mb: 1,
-              borderRadius: 2 ,
+              borderRadius: 2,
 
               "&.active": {
                 bgcolor: "primary.main",

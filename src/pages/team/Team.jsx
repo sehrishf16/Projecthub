@@ -1,0 +1,176 @@
+import { Box, Pagination, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+
+import initialMembers from "../../data/members";
+
+import TeamToolbar from "../../components/team/TeamToolbar";
+import TeamTable from "../../components/team/TeamTable";
+import MemberDialog from "../../components/team/MemberDialog";
+import DeleteMemberDialog from "../../components/team/DeleteMemberDialog";
+
+const Team = () => {
+  // Local Storage
+  const [members, setMembers] = useState(() => {
+    const saved = localStorage.getItem("members");
+    return saved ? JSON.parse(saved) : initialMembers;
+  });
+
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("All");
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingMember, setEditingMember] = useState(null);
+
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [selectedMember, setSelectedMember] = useState(null);
+
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 5;
+
+  useEffect(() => {
+    localStorage.setItem("members", JSON.stringify(members));
+  }, [members]);
+
+  // Add Member
+  const addMember = (member) => {
+    setMembers((prev) => [
+      ...prev,
+      {
+        ...member,
+        id: Date.now(),
+      },
+    ]);
+
+    setPage(1);
+  };
+
+  // Update Member
+  const updateMember = (updatedMember) => {
+    setMembers((prev) =>
+      prev.map((member) =>
+        member.id === updatedMember.id
+          ? updatedMember
+          : member
+      )
+    );
+  };
+
+  // Edit
+  const editMember = (member) => {
+    setEditingMember(member);
+    setDialogOpen(true);
+  };
+
+  // Delete
+  const deleteMember = (member) => {
+    setSelectedMember(member);
+    setDeleteOpen(true);
+  };
+
+  // Confirm Delete
+  const confirmDelete = () => {
+    setMembers((prev) =>
+      prev.filter(
+        (member) => member.id !== selectedMember.id
+      )
+    );
+
+    setDeleteOpen(false);
+    setSelectedMember(null);
+    setPage(1);
+  };
+
+  // Filter
+  const filteredMembers = members.filter((member) => {
+    const matchesSearch =
+      member.name
+        .toLowerCase()
+        .includes(search.toLowerCase()) ||
+      member.email
+        .toLowerCase()
+        .includes(search.toLowerCase());
+
+    const matchesStatus =
+      status === "All" ||
+      member.status === status;
+
+    return matchesSearch && matchesStatus;
+  });
+
+  // Pagination
+  const paginatedMembers = filteredMembers.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage
+  );
+
+  return (
+    <Box>
+      <Typography
+        variant="h4"
+        fontWeight={700}
+        mb={3}
+      >
+        Team Members
+      </Typography>
+
+      <TeamToolbar
+        onAdd={() => {
+          setEditingMember(null);
+          setDialogOpen(true);
+        }}
+        search={search}
+        onSearch={(value) => {
+          setSearch(value);
+          setPage(1);
+        }}
+        status={status}
+        onStatusChange={(value) => {
+          setStatus(value);
+          setPage(1);
+        }}
+      />
+
+      <TeamTable
+        members={paginatedMembers}
+        onEdit={editMember}
+        onDelete={deleteMember}
+      />
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mt: 3,
+        }}
+      >
+        <Pagination
+          page={page}
+          count={Math.ceil(filteredMembers.length / rowsPerPage)}
+          onChange={(e, value) => setPage(value)}
+          color="primary"
+          shape="rounded"
+        />
+      </Box>
+
+      <MemberDialog
+        open={dialogOpen}
+        handleClose={() => {
+          setDialogOpen(false);
+          setEditingMember(null);
+        }}
+        addMember={addMember}
+        updateMember={updateMember}
+        editingMember={editingMember}
+      />
+
+      <DeleteMemberDialog
+        open={deleteOpen}
+        handleClose={() => setDeleteOpen(false)}
+        handleDelete={confirmDelete}
+        memberName={selectedMember?.name}
+      />
+    </Box>
+  );
+};
+
+export default Team;
