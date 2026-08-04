@@ -72,16 +72,7 @@
 
                   <TableCell>{project.tasks}</TableCell>
 
-                  <TableCell sx={{ minWidth: 170 }}>
-                    <LinearProgress
-                      variant="determinate"
-                      value={project.progress}
-                      sx={{ mb: 0.5 }}
-                    />
-
-                    <Typography variant="caption">{project.progress}%</Typography>
-                  </TableCell>
-
+                  
                   <TableCell>{project.dueDate}</TableCell>
                   <TableCell>
                     <strong>Actions</strong>

@@ -32,7 +32,7 @@ const Kanban = () => {
       <Typography
         variant="h4"
         fontWeight={700}
-        mb={3}
+       
       >
         Kanban Board
       </Typography>

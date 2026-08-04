@@ -41,15 +41,15 @@ const Projects = () => {
 
 const rowsPerPage = 5;
 
-  // Dialog State
+ 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
 
-  // Delete Dialog State
+ 
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
 
-  // Add Project
+  
  const addProject = (project) => {
   setProjects((prev) => [
     ...prev,
@@ -64,7 +64,7 @@ const rowsPerPage = 5;
   setPage(1);
 };
 
-  // Update Project
+ 
   const updateProject = (updatedProject) => {
   setProjects((prev) =>
     prev.map((project) =>
@@ -76,19 +76,19 @@ const rowsPerPage = 5;
 
   setPage(1);
 };
-  // Edit
+ 
   const editProject = (project) => {
     setEditingProject(project);
     setDialogOpen(true);
   };
 
-  // Delete Button Click
+  
   const deleteProject = (project) => {
     setSelectedProject(project);
     setDeleteOpen(true);
   };
 
-  // Confirm Delete
+ 
   const confirmDelete = () => {
   setProjects((prev) =>
     prev.filter(
@@ -124,7 +124,7 @@ useEffect(() => {
 
   return (
     <Box>
-      <Typography variant="h4" fontWeight={700} mb={3}>
+      <Typography variant="h4" fontWeight={700} >
         Projects
       </Typography>
 

@@ -15,7 +15,7 @@ import AnalyticsChart from "../../components/dashboard/AnalyticsChart";
 const Dashboard = () => {
   return (
     <><><Box>
-          <Typography variant="h4" fontWeight={700} gutterBottom>
+          <Typography variant="h4" fontWeight={700} >
               Welcome Back 👋
           </Typography>
 
@@ -23,7 +23,7 @@ const Dashboard = () => {
               Here's an overview of your workspace.
           </Typography>
 
-          {/* Statistics Cards */}
+         
           <Grid container spacing={3}>
               <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
                   <StatCard
@@ -57,7 +57,7 @@ const Dashboard = () => {
               </Grid>
           </Grid>
 
-          {/* Analytics Chart */}
+          
           <Box mt={4}>
               <AnalyticsChart />
           </Box>
@@ -73,10 +73,7 @@ const Dashboard = () => {
               </Grid>
           </Box></><Box mt={4}>
               <Grid container spacing={3}>
-                  <Grid size={{ xs: 12, lg: 8 }}>
-                      <AnalyticsChart />
-                  </Grid>
-
+                  
                   <Grid size={{ xs: 12, lg: 4 }}>
                       <TaskStatusChart />
                   </Grid>

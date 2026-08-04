@@ -16,9 +16,9 @@ const KanbanColumn = ({
       ref={setNodeRef}
       sx={{
         bgcolor: "background.paper",
-        borderRadius: 3,
+        borderRadius: 2,
         p: 2,
-        minHeight: 600,
+        minHeight: 300,
       }}
     >
       <Typography

@@ -29,7 +29,7 @@ const deadlines = [
 
 const UpcomingDeadlines = () => {
   return (
-    <Card sx={{ height: "100%" }}>
+    <Card >
       <CardContent>
         <Typography variant="h6" fontWeight={600} mb={2}>
           Upcoming Deadlines

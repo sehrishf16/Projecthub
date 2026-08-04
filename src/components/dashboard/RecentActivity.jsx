@@ -39,7 +39,7 @@ const activities = [
 
 const RecentActivity = () => {
   return (
-    <Card sx={{ height: "100%" }}>
+    <Card >
       <CardContent>
         <Typography variant="h6" fontWeight={600} mb={2}>
           Recent Activity

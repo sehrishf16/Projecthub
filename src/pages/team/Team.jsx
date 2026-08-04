@@ -9,7 +9,7 @@ import MemberDialog from "../../components/team/MemberDialog";
 import DeleteMemberDialog from "../../components/team/DeleteMemberDialog";
 
 const Team = () => {
-  // Local Storage
+
   const [members, setMembers] = useState(() => {
     const saved = localStorage.getItem("members");
     return saved ? JSON.parse(saved) : initialMembers;
@@ -31,7 +31,6 @@ const Team = () => {
     localStorage.setItem("members", JSON.stringify(members));
   }, [members]);
 
-  // Add Member
   const addMember = (member) => {
     setMembers((prev) => [
       ...prev,
@@ -44,7 +43,7 @@ const Team = () => {
     setPage(1);
   };
 
-  // Update Member
+
   const updateMember = (updatedMember) => {
     setMembers((prev) =>
       prev.map((member) =>
@@ -55,19 +54,19 @@ const Team = () => {
     );
   };
 
-  // Edit
+
   const editMember = (member) => {
     setEditingMember(member);
     setDialogOpen(true);
   };
 
-  // Delete
+  
   const deleteMember = (member) => {
     setSelectedMember(member);
     setDeleteOpen(true);
   };
 
-  // Confirm Delete
+
   const confirmDelete = () => {
     setMembers((prev) =>
       prev.filter(
@@ -80,7 +79,7 @@ const Team = () => {
     setPage(1);
   };
 
-  // Filter
+ 
   const filteredMembers = members.filter((member) => {
     const matchesSearch =
       member.name
@@ -97,7 +96,7 @@ const Team = () => {
     return matchesSearch && matchesStatus;
   });
 
-  // Pagination
+  
   const paginatedMembers = filteredMembers.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
@@ -108,7 +107,7 @@ const Team = () => {
       <Typography
         variant="h4"
         fontWeight={700}
-        mb={3}
+       
       >
         Team Members
       </Typography>

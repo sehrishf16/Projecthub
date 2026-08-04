@@ -9,7 +9,7 @@ const StatCard = ({
   return (
     <Card
       sx={{
-        height: "100%",
+       
         transition: ".3s",
         cursor: "pointer",
 
@@ -44,8 +44,8 @@ const StatCard = ({
           <Avatar
             sx={{
               bgcolor: color,
-              width: 56,
-              height: 56,
+              width: 5,
+              height: 5,
             }}
           >
             {icon}

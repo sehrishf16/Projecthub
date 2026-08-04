@@ -6,19 +6,20 @@ import Projects from "../pages/projects/Projects";
 import Tasks from "../pages/tasks/Tasks";
 import Team from "../pages/team/Team";
 import Kanban from "../pages/kanban/Kanban";
-
+import Calendar from "../pages/calender/Calendar";
 
 const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
-      
+
       <Route element={<DashboardLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="tasks" element={<Tasks />} />
         <Route path="/team" element={<Team />} />
         <Route path="/kanban" element={<Kanban />} />
+        <Route path="/calendar" element={<Calendar />} />
       </Route>
     </Routes>
   );

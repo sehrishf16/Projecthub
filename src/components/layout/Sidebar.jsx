@@ -39,15 +39,16 @@ const menuItems = [
     path: "/tasks",
   },
   {
-    title: "Team",
-    icon: <GroupIcon />,
-    path: "/team",
-  },
-  {
     title: "Kanban",
     icon: <ViewKanbanIcon />,
     path: "/kanban",
   },
+  {
+    title: "Team",
+    icon: <GroupIcon />,
+    path: "/team",
+  },
+  
   {
     title: "Calendar",
     icon: <CalendarMonthIcon />,
@@ -74,7 +75,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
             sx={{
               mx: 1.5,
               mb: 1,
-              borderRadius: 2,
+              borderRadius: 1,
 
               "&.active": {
                 bgcolor: "primary.main",
@@ -107,7 +108,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
           sx={{
             mx: 1.5,
             mb: 2,
-            borderRadius: 2,
+            borderRadius: 1,
           }}
         >
           <ListItemIcon
