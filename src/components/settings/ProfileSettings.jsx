@@ -34,18 +34,14 @@ const defaultProfile = {
 const ProfileSettings = () => {
   const fileInputRef = useRef(null);
 
-  const [profile, setProfile] =
-    useState(defaultProfile);
+  const [profile, setProfile] = useState(defaultProfile);
 
-  const [errors, setErrors] =
-    useState({});
+  const [errors, setErrors] = useState({});
 
-  const [snackbar, setSnackbar] =
-    useState(false);
+  const [snackbar, setSnackbar] = useState(false);
 
   useEffect(() => {
-    const saved =
-      localStorage.getItem("profile");
+    const saved = localStorage.getItem("profile");
 
     if (saved) {
       setProfile(JSON.parse(saved));
@@ -56,31 +52,21 @@ const ProfileSettings = () => {
     const temp = {};
 
     if (!profile.firstName.trim()) {
-      temp.firstName =
-        "First name is required";
+      temp.firstName = "First name is required";
     }
 
     if (!profile.lastName.trim()) {
-      temp.lastName =
-        "Last name is required";
+      temp.lastName = "Last name is required";
     }
 
     if (!profile.email.trim()) {
-      temp.email =
-        "Email is required";
-    } else if (
-      !/\S+@\S+\.\S+/.test(profile.email)
-    ) {
-      temp.email =
-        "Invalid email";
+      temp.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(profile.email)) {
+      temp.email = "Invalid email";
     }
 
-    if (
-      profile.phone &&
-      !/^[0-9]{10}$/.test(profile.phone)
-    ) {
-      temp.phone =
-        "Enter a valid phone number";
+    if (profile.phone && !/^[0-9]{10}$/.test(profile.phone)) {
+      temp.phone = "Enter a valid phone number";
     }
 
     setErrors(temp);
@@ -91,8 +77,7 @@ const ProfileSettings = () => {
   const handleChange = (event) => {
     setProfile((prev) => ({
       ...prev,
-      [event.target.name]:
-        event.target.value,
+      [event.target.name]: event.target.value,
     }));
   };
 
@@ -101,13 +86,11 @@ const ProfileSettings = () => {
   };
 
   const handleAvatar = (event) => {
-    const file =
-      event.target.files?.[0];
+    const file = event.target.files?.[0];
 
     if (!file) return;
 
-    const reader =
-      new FileReader();
+    const reader = new FileReader();
 
     reader.onload = () => {
       setProfile((prev) => ({
@@ -122,18 +105,13 @@ const ProfileSettings = () => {
   const handleSave = () => {
     if (!validate()) return;
 
-    localStorage.setItem(
-      "profile",
-      JSON.stringify(profile)
-    );
+    localStorage.setItem("profile", JSON.stringify(profile));
 
     setSnackbar(true);
   };
 
   const handleReset = () => {
-    localStorage.removeItem(
-      "profile"
-    );
+    localStorage.removeItem("profile");
 
     setProfile(defaultProfile);
 
@@ -150,28 +128,17 @@ const ProfileSettings = () => {
       }}
     >
       <CardContent>
-
-        <Typography
-          variant="h5"
-          fontWeight={700}
-        >
+        <Typography variant="h5" fontWeight={700}>
           Profile Settings
         </Typography>
 
-        <Typography
-          color="text.secondary"
-          mb={4}
-        >
+        <Typography color="text.secondary" mb={4}>
           Update your profile information.
         </Typography>
 
         <Divider sx={{ mb: 4 }} />
 
-        <Stack
-          spacing={2}
-          alignItems="center"
-          mb={5}
-        >
+        <Stack spacing={2} alignItems="center" mb={5}>
           <Avatar
             src={profile.avatar}
             sx={{
@@ -181,8 +148,7 @@ const ProfileSettings = () => {
               fontSize: 42,
             }}
           >
-            {!profile.avatar &&
-              profile.firstName[0]}
+            {!profile.avatar && profile.firstName[0]}
           </Avatar>
 
           <input
@@ -195,21 +161,24 @@ const ProfileSettings = () => {
 
           <Button
             variant="outlined"
-            startIcon={
-              <CameraAltIcon />
-            }
-            onClick={
-              handleAvatarClick
-            }
+            size="small"
+            startIcon={<CameraAltIcon sx={{ fontSize: 16 }} />}
+            onClick={handleAvatarClick}
+            sx={{
+              textTransform: "none",
+              width: 120,
+              minWidth: 0,
+              px: 1,
+              py: 0.6,
+              fontSize: "0.8rem",
+              borderRadius: 2,
+            }}
           >
             Upload Photo
           </Button>
         </Stack>
 
-        <Grid
-          container
-          spacing={3}
-        >
+        <Grid container spacing={3}>
           <Grid
             size={{
               xs: 12,
@@ -220,18 +189,10 @@ const ProfileSettings = () => {
               fullWidth
               label="First Name"
               name="firstName"
-              value={
-                profile.firstName
-              }
-              onChange={
-                handleChange
-              }
-              error={
-                !!errors.firstName
-              }
-              helperText={
-                errors.firstName
-              }
+              value={profile.firstName}
+              onChange={handleChange}
+              error={!!errors.firstName}
+              helperText={errors.firstName}
             />
           </Grid>
 
@@ -245,18 +206,10 @@ const ProfileSettings = () => {
               fullWidth
               label="Last Name"
               name="lastName"
-              value={
-                profile.lastName
-              }
-              onChange={
-                handleChange
-              }
-              error={
-                !!errors.lastName
-              }
-              helperText={
-                errors.lastName
-              }
+              value={profile.lastName}
+              onChange={handleChange}
+              error={!!errors.lastName}
+              helperText={errors.lastName}
             />
           </Grid>
 
@@ -270,21 +223,13 @@ const ProfileSettings = () => {
               fullWidth
               label="Email"
               name="email"
-              value={
-                profile.email
-              }
-              onChange={
-                handleChange
-              }
-              error={
-                !!errors.email
-              }
-              helperText={
-                errors.email
-              }
+              value={profile.email}
+              onChange={handleChange}
+              error={!!errors.email}
+              helperText={errors.email}
             />
           </Grid>
-                    <Grid
+          <Grid
             size={{
               xs: 12,
               md: 6,
@@ -402,7 +347,6 @@ const ProfileSettings = () => {
             Profile updated successfully!
           </Alert>
         </Snackbar>
-
       </CardContent>
     </Card>
   );

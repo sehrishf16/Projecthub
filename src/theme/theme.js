@@ -1,6 +1,5 @@
-// src/theme/theme.js
-
 import { createTheme } from "@mui/material/styles";
+
 import colors from "./colors";
 
 const getTheme = (mode = "light") => {
@@ -270,4 +269,3 @@ const getTheme = (mode = "light") => {
 };
 
 export default getTheme;
-  

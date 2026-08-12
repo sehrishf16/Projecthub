@@ -1,11 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Button, Chip, Stack, Typography } from "@mui/material";
 
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import LoginIcon from "@mui/icons-material/Login";
@@ -38,8 +31,7 @@ const Welcome = () => {
             md: 6,
           },
           overflow: "hidden",
-          boxShadow:
-            "0 24px 70px rgba(80, 50, 30, 0.12)",
+          boxShadow: "0 24px 70px rgba(80, 50, 30, 0.12)",
           display: "flex",
           flexDirection: {
             xs: "column",
@@ -47,10 +39,6 @@ const Welcome = () => {
           },
         }}
       >
-        {/* =====================================================
-            LEFT - ILLUSTRATION
-        ====================================================== */}
-
         <Box
           sx={{
             width: {
@@ -73,8 +61,6 @@ const Welcome = () => {
             },
           }}
         >
-          {/* Decorative Circle */}
-
           <Box
             sx={{
               position: "absolute",
@@ -98,8 +84,6 @@ const Welcome = () => {
               right: -80,
             }}
           />
-
-          {/* Illustration Container */}
 
           <Box
             sx={{
@@ -146,8 +130,7 @@ const Welcome = () => {
                 borderRadius: 5,
                 overflow: "hidden",
                 bgcolor: "#F8C5B5",
-                boxShadow:
-                  "0 18px 45px rgba(120,70,50,0.16)",
+                boxShadow: "0 18px 45px rgba(120,70,50,0.16)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -172,10 +155,6 @@ const Welcome = () => {
           </Box>
         </Box>
 
-        {/* =====================================================
-            RIGHT - CONTENT
-        ====================================================== */}
-
         <Box
           sx={{
             flex: 1,
@@ -195,14 +174,7 @@ const Welcome = () => {
               mx: "auto",
             }}
           >
-            {/* Logo */}
-
-            <Stack
-              direction="row"
-              spacing={1.5}
-              alignItems="center"
-              mb={4}
-            >
+            <Stack direction="row" spacing={1.5} alignItems="center" mb={4}>
               <Box
                 sx={{
                   width: 52,
@@ -215,32 +187,22 @@ const Welcome = () => {
                   justifyContent: "center",
                   fontSize: 25,
                   fontWeight: 800,
-                  boxShadow:
-                    "0 8px 20px rgba(255,127,51,0.25)",
+                  boxShadow: "0 8px 20px rgba(255,127,51,0.25)",
                 }}
               >
                 P
               </Box>
 
               <Box>
-                <Typography
-                  fontWeight={800}
-                  fontSize={22}
-                  lineHeight={1}
-                >
+                <Typography fontWeight={800} fontSize={22} lineHeight={1}>
                   ProjectHub
                 </Typography>
 
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                >
+                <Typography variant="caption" color="text.secondary">
                   Project Management
                 </Typography>
               </Box>
             </Stack>
-
-            {/* Heading */}
 
             <Typography
               variant="h2"
@@ -279,13 +241,9 @@ const Welcome = () => {
                 mb: 4,
               }}
             >
-              Organize projects, manage tasks,
-              collaborate with your team and
-              stay on top of deadlines—all from
-              one simple workspace.
+              Organize projects, manage tasks, collaborate with your team and
+              stay on top of deadlines—all from one simple workspace.
             </Typography>
-
-            {/* Features */}
 
             <Stack spacing={2.2} mb={5}>
               <Box
@@ -316,12 +274,8 @@ const Welcome = () => {
                     Smart Task Management
                   </Typography>
 
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    Create, track and complete
-                    tasks with ease.
+                  <Typography variant="body2" color="text.secondary">
+                    Create, track and complete tasks with ease.
                   </Typography>
                 </Box>
               </Box>
@@ -350,16 +304,10 @@ const Welcome = () => {
                 </Box>
 
                 <Box>
-                  <Typography fontWeight={700}>
-                    Team Collaboration
-                  </Typography>
+                  <Typography fontWeight={700}>Team Collaboration</Typography>
 
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    Keep everyone aligned and
-                    productive.
+                  <Typography variant="body2" color="text.secondary">
+                    Keep everyone aligned and productive.
                   </Typography>
                 </Box>
               </Box>
@@ -388,22 +336,14 @@ const Welcome = () => {
                 </Box>
 
                 <Box>
-                  <Typography fontWeight={700}>
-                    Stay on Schedule
-                  </Typography>
+                  <Typography fontWeight={700}>Stay on Schedule</Typography>
 
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    Manage deadlines and upcoming
-                    events.
+                  <Typography variant="body2" color="text.secondary">
+                    Manage deadlines and upcoming events.
                   </Typography>
                 </Box>
               </Box>
             </Stack>
-
-            {/* Buttons */}
 
             <Stack
               direction={{
@@ -424,8 +364,7 @@ const Welcome = () => {
                   textTransform: "none",
                   fontWeight: 700,
                   fontSize: 16,
-                  boxShadow:
-                    "0 8px 20px rgba(255,127,51,0.25)",
+                  boxShadow: "0 8px 20px rgba(255,127,51,0.25)",
                 }}
               >
                 Get Started
@@ -449,13 +388,7 @@ const Welcome = () => {
               </Button>
             </Stack>
 
-            {/* Signup */}
-
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ mt: 3 }}
-            >
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 3 }}>
               New to ProjectHub?{" "}
               <Box
                 component="span"

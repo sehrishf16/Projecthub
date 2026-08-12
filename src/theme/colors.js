@@ -1,5 +1,3 @@
-// src/theme/colors.js
-
 const colors = {
   light: {
     primary: "#FF8A3D",

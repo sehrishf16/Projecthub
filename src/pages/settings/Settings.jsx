@@ -1,13 +1,6 @@
 import { useState } from "react";
 
-import {
-  Box,
-  Card,
-  CardContent,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
+import { Box, Card, CardContent, Tab, Tabs, Typography } from "@mui/material";
 
 import PersonIcon from "@mui/icons-material/Person";
 import PaletteIcon from "@mui/icons-material/Palette";
@@ -16,9 +9,6 @@ import SecurityIcon from "@mui/icons-material/Security";
 import InfoIcon from "@mui/icons-material/Info";
 
 import ProfileSettings from "../../components/settings/ProfileSettings";
-import AppearanceSettings from "../../components/settings/AppearanceSettings";
-import NotificationSettings from "../../components/settings/NotificationSettings";
-import SecuritySettings from "../../components/settings/SecuritySettings";
 import AboutSettings from "../../components/settings/AboutSettings";
 
 const Settings = () => {
@@ -33,16 +23,7 @@ const Settings = () => {
       case 0:
         return <ProfileSettings />;
 
-      case 1:
-        return <AppearanceSettings />;
-
       case 2:
-        return <NotificationSettings />;
-
-      case 3:
-        return <SecuritySettings />;
-
-      case 4:
         return <AboutSettings />;
 
       default:
@@ -52,19 +33,11 @@ const Settings = () => {
 
   return (
     <Box>
-
-      <Typography
-        variant="h4"
-        fontWeight={700}
-        mb={1}
-      >
+      <Typography variant="h4" fontWeight={700} mb={1}>
         Settings
       </Typography>
 
-      <Typography
-        color="text.secondary"
-        mb={4}
-      >
+      <Typography color="text.secondary" mb={4}>
         Manage your account and application preferences.
       </Typography>
 
@@ -77,7 +50,6 @@ const Settings = () => {
         }}
       >
         <CardContent sx={{ p: 0 }}>
-
           <Tabs
             value={tab}
             onChange={handleChange}
@@ -90,35 +62,9 @@ const Settings = () => {
               borderColor: "divider",
             }}
           >
-            <Tab
-              icon={<PersonIcon />}
-              iconPosition="start"
-              label="Profile"
-            />
+            <Tab icon={<PersonIcon />} iconPosition="start" label="Profile" />
 
-            <Tab
-              icon={<PaletteIcon />}
-              iconPosition="start"
-              label="Appearance"
-            />
-
-            <Tab
-              icon={<NotificationsIcon />}
-              iconPosition="start"
-              label="Notifications"
-            />
-
-            <Tab
-              icon={<SecurityIcon />}
-              iconPosition="start"
-              label="Security"
-            />
-
-            <Tab
-              icon={<InfoIcon />}
-              iconPosition="start"
-              label="About"
-            />
+            <Tab icon={<InfoIcon />} iconPosition="start" label="About" />
           </Tabs>
 
           <Box
@@ -128,10 +74,8 @@ const Settings = () => {
           >
             {renderContent()}
           </Box>
-
         </CardContent>
       </Card>
-
     </Box>
   );
 };

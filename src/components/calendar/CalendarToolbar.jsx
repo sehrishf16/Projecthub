@@ -1,75 +1,51 @@
 import {
   Box,
-  Typography,
   Button,
-  ToggleButton,
-  ToggleButtonGroup,
+  ButtonGroup,
+  Typography,
 } from "@mui/material";
 
-import TodayIcon from "@mui/icons-material/Today";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import TodayIcon from "@mui/icons-material/Today";
 
-const CalendarToolbar = (toolbar) => {
-  const goToBack = () => {
-    toolbar.onNavigate("PREV");
-  };
-
-  const goToNext = () => {
-    toolbar.onNavigate("NEXT");
-  };
-
-  const goToToday = () => {
-    toolbar.onNavigate("TODAY");
-  };
-
-  const changeView = (event, view) => {
-    if (view) {
-      toolbar.onView(view);
-    }
-  };
-
+const CalendarToolbar = ({
+  onNavigate,
+  onView,
+  label,
+  view,
+}) => {
   return (
     <Box
       sx={{
-        mb: 3,
         display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-between",
         alignItems: "center",
+        justifyContent: "space-between",
         gap: 2,
+        mb: 3,
+        flexWrap: "wrap",
       }}
     >
-
-
-      <Box>
-        <Typography variant="h5" fontWeight={700}>
-          {toolbar.label}
-        </Typography>
-
-        <Typography
-          variant="body2"
-          color="text.secondary"
-        >
-          Manage your meetings and deadlines
-        </Typography>
-      </Box>
-
-     
+    
 
       <Box
         sx={{
           display: "flex",
+          alignItems: "center",
           gap: 1,
-          alignItems: "center"
         }}
       >
         <Button
           variant="outlined"
           startIcon={<TodayIcon />}
-          onClick={goToToday}
+          onClick={() => onNavigate("TODAY")}
           sx={{
+            height: 48,
+            px: 2.5,
             borderRadius: 3,
+            color: "primary.main",
+            borderColor: "primary.main",
+            fontWeight: 700,
             textTransform: "none",
           }}
         >
@@ -78,10 +54,13 @@ const CalendarToolbar = (toolbar) => {
 
         <Button
           variant="outlined"
-          onClick={goToBack}
+          onClick={() => onNavigate("PREV")}
           sx={{
-            minWidth: 42,
+            minWidth: 58,
+            height: 48,
             borderRadius: 3,
+            color: "primary.main",
+            borderColor: "primary.main",
           }}
         >
           <ChevronLeftIcon />
@@ -89,26 +68,76 @@ const CalendarToolbar = (toolbar) => {
 
         <Button
           variant="outlined"
-          onClick={goToNext}
+          onClick={() => onNavigate("NEXT")}
           sx={{
-            minWidth: 42,
+            minWidth: 58,
+            height: 48,
             borderRadius: 3,
+            color: "primary.main",
+            borderColor: "primary.main",
           }}
         >
           <ChevronRightIcon />
         </Button>
       </Box>
 
+      
 
-
-      <ToggleButtonGroup
-        exclusive
-        value={toolbar.view}
-        onChange={changeView}
-        size="small"
+      <Typography
+        variant="h6"
+        fontWeight={700}
+        sx={{
+          color: "text.primary",
+          textAlign: "center",
+        }}
       >
-        
-      </ToggleButtonGroup>
+        {label}
+      </Typography>
+
+      
+
+      <ButtonGroup
+        variant="outlined"
+        sx={{
+          "& .MuiButton-root": {
+            textTransform: "none",
+            fontWeight: 600,
+            borderColor: "divider",
+          },
+        }}
+      >
+        {[
+          ["month", "Month"],
+          ["week", "Week"],
+          ["day", "Day"],
+          ["agenda", "Agenda"],
+        ].map(([value, text]) => (
+          <Button
+            key={value}
+            onClick={() => onView(value)}
+            sx={{
+              bgcolor:
+                view === value
+                  ? "primary.main"
+                  : "transparent",
+
+              color:
+                view === value
+                  ? "#fff"
+                  : "text.secondary",
+
+              "&:hover": {
+                bgcolor:
+                  view === value
+                    ? "primary.dark"
+                    : "action.hover",
+              },
+            }}
+          >
+            {text}
+          </Button>
+        ))}
+      </ButtonGroup>
     </Box>
   );
 };

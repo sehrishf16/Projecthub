@@ -27,11 +27,9 @@ import AuthLayout from "../../components/auth/AuthLayout";
 const SignUp = () => {
   const navigate = useNavigate();
 
-  const [showPassword, setShowPassword] =
-    useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
@@ -42,8 +40,7 @@ const SignUp = () => {
 
   const [errors, setErrors] = useState({});
 
-  const [success, setSuccess] =
-    useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -64,39 +61,25 @@ const SignUp = () => {
     const newErrors = {};
 
     if (!form.name.trim()) {
-      newErrors.name =
-        "Full name is required.";
+      newErrors.name = "Full name is required.";
     }
 
     if (!form.email.trim()) {
-      newErrors.email =
-        "Email address is required.";
-    } else if (
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-        form.email
-      )
-    ) {
-      newErrors.email =
-        "Enter a valid email address.";
+      newErrors.email = "Email address is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      newErrors.email = "Enter a valid email address.";
     }
 
     if (!form.password) {
-      newErrors.password =
-        "Password is required.";
+      newErrors.password = "Password is required.";
     } else if (form.password.length < 6) {
-      newErrors.password =
-        "Password must contain at least 6 characters.";
+      newErrors.password = "Password must contain at least 6 characters.";
     }
 
     if (!form.confirmPassword) {
-      newErrors.confirmPassword =
-        "Please confirm your password.";
-    } else if (
-      form.password !==
-      form.confirmPassword
-    ) {
-      newErrors.confirmPassword =
-        "Passwords do not match.";
+      newErrors.confirmPassword = "Please confirm your password.";
+    } else if (form.password !== form.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match.";
     }
 
     setErrors(newErrors);
@@ -111,49 +94,33 @@ const SignUp = () => {
       return;
     }
 
-    const existingUser =
-      localStorage.getItem(
-        "projecthub_user"
-      );
+    const existingUser = localStorage.getItem("projecthub_user");
 
     if (existingUser) {
       try {
-        const user =
-          JSON.parse(existingUser);
+        const user = JSON.parse(existingUser);
 
-        if (
-          user.email?.toLowerCase() ===
-          form.email.trim().toLowerCase()
-        ) {
+        if (user.email?.toLowerCase() === form.email.trim().toLowerCase()) {
           setErrors({
-            email:
-              "An account with this email already exists.",
+            email: "An account with this email already exists.",
           });
 
           return;
         }
       } catch {
-        localStorage.removeItem(
-          "projecthub_user"
-        );
+        localStorage.removeItem("projecthub_user");
       }
     }
 
     const user = {
       name: form.name.trim(),
-      email: form.email
-        .trim()
-        .toLowerCase(),
+      email: form.email.trim().toLowerCase(),
       password: form.password,
       role: "Team Member",
-      createdAt:
-        new Date().toISOString(),
+      createdAt: new Date().toISOString(),
     };
 
-    localStorage.setItem(
-      "projecthub_user",
-      JSON.stringify(user)
-    );
+    localStorage.setItem("projecthub_user", JSON.stringify(user));
 
     setSuccess(true);
 
@@ -181,8 +148,7 @@ const SignUp = () => {
           borderRadius: 5,
           border: "1px solid",
           borderColor: "divider",
-          boxShadow:
-            "0 24px 70px rgba(80, 50, 30, 0.10)",
+          boxShadow: "0 24px 70px rgba(80, 50, 30, 0.10)",
         }}
       >
         <CardContent
@@ -194,8 +160,6 @@ const SignUp = () => {
             },
           }}
         >
-          {/* Back */}
-
           <IconButton
             onClick={() => navigate("/signin")}
             sx={{
@@ -209,47 +173,29 @@ const SignUp = () => {
             <ArrowBackIcon />
           </IconButton>
 
-          {/* Header */}
-
-          <Stack
-            alignItems="center"
-            spacing={2}
-            mb={4}
-          >
+          <Stack alignItems="center" spacing={2} mb={4}>
             <Avatar
               sx={{
                 width: 70,
                 height: 70,
                 bgcolor: "primary.main",
                 fontSize: 30,
-                boxShadow:
-                  "0 8px 25px rgba(255,127,51,0.25)",
+                boxShadow: "0 8px 25px rgba(255,127,51,0.25)",
               }}
             >
-              <PersonAddIcon
-                fontSize="large"
-              />
+              <PersonAddIcon fontSize="large" />
             </Avatar>
 
             <Box textAlign="center">
-              <Typography
-                variant="h4"
-                fontWeight={800}
-              >
+              <Typography variant="h4" fontWeight={800}>
                 Create Account
               </Typography>
 
-              <Typography
-                color="text.secondary"
-                mt={1}
-              >
-                Create your ProjectHub account
-                and start managing projects.
+              <Typography color="text.secondary" mt={1}>
+                Create your ProjectHub account and start managing projects.
               </Typography>
             </Box>
           </Stack>
-
-          {/* General Error */}
 
           {errors.submit && (
             <Alert
@@ -263,16 +209,8 @@ const SignUp = () => {
             </Alert>
           )}
 
-          {/* Form */}
-
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-          >
+          <Box component="form" onSubmit={handleSubmit} noValidate>
             <Stack spacing={2.5}>
-              {/* Name */}
-
               <TextField
                 fullWidth
                 required
@@ -281,14 +219,10 @@ const SignUp = () => {
                 autoComplete="name"
                 value={form.name}
                 onChange={handleChange}
-                error={Boolean(
-                  errors.name
-                )}
+                error={Boolean(errors.name)}
                 helperText={errors.name}
                 placeholder="Enter your full name"
               />
-
-              {/* Email */}
 
               <TextField
                 fullWidth
@@ -299,35 +233,22 @@ const SignUp = () => {
                 autoComplete="email"
                 value={form.email}
                 onChange={handleChange}
-                error={Boolean(
-                  errors.email
-                )}
+                error={Boolean(errors.email)}
                 helperText={errors.email}
                 placeholder="you@example.com"
               />
-
-              {/* Password */}
 
               <TextField
                 fullWidth
                 required
                 label="Password"
                 name="password"
-                type={
-                  showPassword
-                    ? "text"
-                    : "password"
-                }
+                type={showPassword ? "text" : "password"}
                 autoComplete="new-password"
                 value={form.password}
                 onChange={handleChange}
-                error={Boolean(
-                  errors.password
-                )}
-                helperText={
-                  errors.password ||
-                  "Minimum 6 characters"
-                }
+                error={Boolean(errors.password)}
+                helperText={errors.password || "Minimum 6 characters"}
                 placeholder="Create a password"
                 InputProps={{
                   endAdornment: (
@@ -335,11 +256,7 @@ const SignUp = () => {
                       <IconButton
                         type="button"
                         edge="end"
-                        onClick={() =>
-                          setShowPassword(
-                            (prev) => !prev
-                          )
-                        }
+                        onClick={() => setShowPassword((prev) => !prev)}
                       >
                         {showPassword ? (
                           <VisibilityOffIcon />
@@ -352,29 +269,17 @@ const SignUp = () => {
                 }}
               />
 
-              {/* Confirm Password */}
-
               <TextField
                 fullWidth
                 required
                 label="Confirm Password"
                 name="confirmPassword"
-                type={
-                  showConfirmPassword
-                    ? "text"
-                    : "password"
-                }
+                type={showConfirmPassword ? "text" : "password"}
                 autoComplete="new-password"
-                value={
-                  form.confirmPassword
-                }
+                value={form.confirmPassword}
                 onChange={handleChange}
-                error={Boolean(
-                  errors.confirmPassword
-                )}
-                helperText={
-                  errors.confirmPassword
-                }
+                error={Boolean(errors.confirmPassword)}
+                helperText={errors.confirmPassword}
                 placeholder="Confirm your password"
                 InputProps={{
                   endAdornment: (
@@ -382,11 +287,7 @@ const SignUp = () => {
                       <IconButton
                         type="button"
                         edge="end"
-                        onClick={() =>
-                          setShowConfirmPassword(
-                            (prev) => !prev
-                          )
-                        }
+                        onClick={() => setShowConfirmPassword((prev) => !prev)}
                       >
                         {showConfirmPassword ? (
                           <VisibilityOffIcon />
@@ -399,16 +300,12 @@ const SignUp = () => {
                 }}
               />
 
-              {/* Submit */}
-
               <Button
                 type="submit"
                 variant="contained"
                 size="large"
                 fullWidth
-                startIcon={
-                  <PersonAddIcon />
-                }
+                startIcon={<PersonAddIcon />}
                 sx={{
                   py: 1.5,
                   mt: 1,
@@ -416,8 +313,7 @@ const SignUp = () => {
                   textTransform: "none",
                   fontWeight: 700,
                   fontSize: 16,
-                  boxShadow:
-                    "0 8px 20px rgba(255,127,51,0.25)",
+                  boxShadow: "0 8px 20px rgba(255,127,51,0.25)",
                 }}
               >
                 Create Account
@@ -425,19 +321,11 @@ const SignUp = () => {
             </Stack>
           </Box>
 
-          {/* Sign In */}
-
-          <Typography
-            textAlign="center"
-            color="text.secondary"
-            mt={4}
-          >
+          <Typography textAlign="center" color="text.secondary" mt={4}>
             Already have an account?{" "}
             <Box
               component="span"
-              onClick={() =>
-                navigate("/signin")
-              }
+              onClick={() => navigate("/signin")}
               sx={{
                 color: "primary.main",
                 fontWeight: 700,
@@ -453,8 +341,6 @@ const SignUp = () => {
         </CardContent>
       </Card>
 
-      {/* Success Snackbar */}
-
       <Snackbar
         open={success}
         autoHideDuration={1200}
@@ -464,12 +350,8 @@ const SignUp = () => {
           horizontal: "right",
         }}
       >
-        <Alert
-          severity="success"
-          variant="filled"
-        >
-          Account created successfully!
-          Redirecting to Sign In...
+        <Alert severity="success" variant="filled">
+          Account created successfully! Redirecting to Sign In...
         </Alert>
       </Snackbar>
     </AuthLayout>

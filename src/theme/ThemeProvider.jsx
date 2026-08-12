@@ -1,30 +1,72 @@
-import { useMemo, useState } from "react";
-import { ThemeProvider as MuiThemeProvider, CssBaseline } from "@mui/material";
-import ColorModeContext from "./ColorModeContext";
-import theme from "./theme";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
-export default function ThemeProvider({ children }) {
-  const [mode, setMode] = useState("light");
+import {
+  CssBaseline,
+  ThemeProvider as MuiThemeProvider,
+} from "@mui/material";
 
-  const colorMode = useMemo(
-    () => ({
-      mode,
+import getTheme from "./theme";
 
-      toggleColorMode: () => {
-        setMode((prev) => (prev === "light" ? "dark" : "light"));
-      },
-    }),
+const ThemeContext = createContext(null);
+
+const THEME_KEY = "projecthub_theme_mode";
+
+const ThemeProvider = ({ children }) => {
+  const [mode, setMode] = useState(() => {
+    const savedMode =
+      localStorage.getItem(THEME_KEY);
+
+    return savedMode === "dark"
+      ? "dark"
+      : "light";
+  });
+
+  const theme = useMemo(
+    () => getTheme(mode),
     [mode]
   );
 
-  const muiTheme = useMemo(() => theme(mode), [mode]);
+  useEffect(() => {
+    localStorage.setItem(
+      THEME_KEY,
+      mode
+    );
+  }, [mode]);
+
+  const toggleMode = () => {
+    setMode((currentMode) =>
+      currentMode === "light"
+        ? "dark"
+        : "light"
+    );
+  };
+
+  const contextValue = {
+    mode,
+    setMode,
+    toggleMode,
+  };
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <MuiThemeProvider theme={muiTheme}>
+    <ThemeContext.Provider
+      value={contextValue}
+    >
+      <MuiThemeProvider theme={theme}>
         <CssBaseline />
+
         {children}
       </MuiThemeProvider>
-    </ColorModeContext.Provider>
+    </ThemeContext.Provider>
   );
-}
+};
+
+export const useThemeSettings = () =>
+  useContext(ThemeContext);
+
+export default ThemeProvider;
