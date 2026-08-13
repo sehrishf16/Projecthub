@@ -1,411 +1,523 @@
-import { Avatar, Box, Button, Chip, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Button, Divider, Stack, Typography } from "@mui/material";
 
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import LoginIcon from "@mui/icons-material/Login";
-import GroupsIcon from "@mui/icons-material/Groups";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
+import ChecklistOutlinedIcon from "@mui/icons-material/ChecklistOutlined";
+import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 
 import { useNavigate } from "react-router-dom";
 
 import AuthLayout from "../../components/auth/AuthLayout";
-
 import projecthubAvatar from "../../assets/projecthub-avatar.png";
+
+const features = [
+  {
+    icon: <FolderOutlinedIcon />,
+    title: "Manage",
+    subtitle: "Projects",
+  },
+  {
+    icon: <ChecklistOutlinedIcon />,
+    title: "Track",
+    subtitle: "Tasks",
+  },
+  {
+    icon: <GroupsOutlinedIcon />,
+    title: "Work",
+    subtitle: "Together",
+  },
+  {
+    icon: <CalendarMonthOutlinedIcon />,
+    title: "Stay",
+    subtitle: "Organized",
+  },
+];
 
 const Welcome = () => {
   const navigate = useNavigate();
 
   return (
-    <AuthLayout>
+    <AuthLayout fullScreen>
       <Box
         sx={{
+          minHeight: "100vh",
           width: "100%",
-          maxWidth: 1180,
-          minHeight: {
-            xs: "auto",
-            md: 680,
-          },
-          bgcolor: "background.paper",
-          borderRadius: {
-            xs: 4,
-            md: 6,
-          },
-          overflow: "hidden",
-          boxShadow: "0 24px 70px rgba(80, 50, 30, 0.12)",
-          display: "flex",
-          flexDirection: {
-            xs: "column",
-            md: "row",
-          },
+          overflowX: "hidden",
+          bgcolor: "#FFF6EC",
+          color: "#1B1B1D",
         }}
       >
         <Box
           sx={{
-            width: {
-              xs: "100%",
-              md: "48%",
-            },
-            minHeight: {
-              xs: 420,
-              md: 680,
-            },
-            bgcolor: "#FFF0E9",
             position: "relative",
-            overflow: "hidden",
+            width: "100%",
+            height: {
+              xs: 220,
+              sm: 270,
+              md: 310,
+            },
+
+            bgcolor: "#FF8A3D",
+
+            borderBottomLeftRadius: "50% 48%",
+
+            borderBottomRightRadius: "50% 48%",
+
             display: "flex",
-            alignItems: "center",
             justifyContent: "center",
-            p: {
-              xs: 3,
-              md: 5,
+            alignItems: "center",
+
+            overflow: "visible",
+
+            /*
+             * Decorative large circle
+             */
+            "&::before": {
+              content: '""',
+              position: "absolute",
+
+              width: {
+                xs: 430,
+                sm: 620,
+                md: 780,
+              },
+
+              height: {
+                xs: 430,
+                sm: 620,
+                md: 780,
+              },
+
+              borderRadius: "50%",
+
+              bgcolor: "rgba(255,255,255,0.10)",
+
+              top: {
+                xs: -350,
+                sm: -500,
+                md: -610,
+              },
+
+              left: "50%",
+
+              transform: "translateX(-50%)",
+
+              pointerEvents: "none",
+            },
+
+            /*
+             * Right decorative circle
+             */
+            "&::after": {
+              content: '""',
+              position: "absolute",
+
+              width: {
+                xs: 150,
+                sm: 220,
+                md: 280,
+              },
+
+              height: {
+                xs: 150,
+                sm: 220,
+                md: 280,
+              },
+
+              borderRadius: "50%",
+
+              border: "1px solid rgba(255,255,255,0.18)",
+
+              top: -80,
+              right: {
+                xs: -60,
+                sm: -70,
+                md: -100,
+              },
+
+              pointerEvents: "none",
             },
           }}
         >
-          <Box
-            sx={{
-              position: "absolute",
-              width: 320,
-              height: 320,
-              borderRadius: "50%",
-              bgcolor: "#FFD9CC",
-              top: -140,
-              left: -100,
-            }}
-          />
-
-          <Box
-            sx={{
-              position: "absolute",
-              width: 260,
-              height: 260,
-              borderRadius: "50%",
-              bgcolor: "#FFE5B8",
-              bottom: -100,
-              right: -80,
-            }}
-          />
+          {/* =================================================
+              AVATAR
+          ================================================== */}
 
           <Box
             sx={{
               position: "relative",
-              zIndex: 2,
-              width: "100%",
-              maxWidth: 440,
-              textAlign: "center",
+              zIndex: 5,
+
+              width: {
+                xs: 150,
+                sm: 190,
+                md: 225,
+              },
+
+              height: {
+                xs: 150,
+                sm: 190,
+                md: 225,
+              },
+
+              borderRadius: "50%",
+
+              bgcolor: "#FFFFFF",
+
+              p: {
+                xs: 0.8,
+                sm: 1,
+                md: 1.2,
+              },
+
+              boxShadow: "0 18px 45px rgba(27,27,29,0.20)",
             }}
           >
-            <Chip
-              label="PROJECT MANAGEMENT"
-              sx={{
-                mb: 2,
-                px: 1,
-                bgcolor: "rgba(255,255,255,0.9)",
-                color: "#333",
-                fontWeight: 800,
-                letterSpacing: 1,
-                borderRadius: 2,
-              }}
-            />
-
-            <Typography
-              variant="h5"
-              fontWeight={800}
-              sx={{
-                mb: 3,
-                color: "#292929",
-              }}
-            >
-              Plan. Collaborate. Achieve.
-            </Typography>
-
-            <Box
+            <Avatar
+              src={projecthubAvatar}
+              alt="ProjectHub"
               sx={{
                 width: "100%",
-                maxWidth: 390,
-                height: {
-                  xs: 330,
-                  md: 440,
-                },
-                mx: "auto",
-                borderRadius: 5,
-                overflow: "hidden",
-                bgcolor: "#F8C5B5",
-                boxShadow: "0 18px 45px rgba(120,70,50,0.16)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Avatar
-                src={projecthubAvatar}
-                alt="ProjectHub illustration"
-                variant="rounded"
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  bgcolor: "transparent",
-                  borderRadius: 0,
+                height: "100%",
+                bgcolor: "transparent",
 
-                  "& img": {
-                    objectFit: "cover",
-                  },
-                }}
-              />
-            </Box>
+                "& img": {
+                  objectFit: "cover",
+                },
+              }}
+            />
           </Box>
         </Box>
 
+        {/* =====================================================
+            MAIN CONTENT
+        ====================================================== */}
+
         <Box
           sx={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
-            p: {
-              xs: 4,
-              sm: 5,
-              md: 7,
+            width: "100%",
+            maxWidth: 900,
+            mx: "auto",
+
+            px: {
+              xs: 2.5,
+              sm: 4,
+              md: 5,
+            },
+
+            textAlign: "center",
+
+            /*
+             * Pull content slightly closer to avatar
+             */
+            mt: {
+              xs: 1,
+              sm: 2,
+              md: 3,
             },
           }}
         >
-          <Box
+          {/* Heading */}
+
+          <Typography
+            component="h1"
             sx={{
-              width: "100%",
-              maxWidth: 560,
-              mx: "auto",
+              fontSize: {
+                xs: "2rem",
+                sm: "2.7rem",
+                md: "3.3rem",
+              },
+
+              lineHeight: 1.1,
+
+              fontWeight: 800,
+
+              color: "#1B1B1D",
+
+              letterSpacing: "-0.03em",
+
+              mb: 1.5,
             }}
           >
-            <Stack direction="row" spacing={1.5} alignItems="center" mb={4}>
-              <Box
-                sx={{
-                  width: 52,
-                  height: 52,
-                  borderRadius: 3,
-                  bgcolor: "primary.main",
-                  color: "white",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 25,
-                  fontWeight: 800,
-                  boxShadow: "0 8px 20px rgba(255,127,51,0.25)",
-                }}
-              >
-                P
-              </Box>
-
-              <Box>
-                <Typography fontWeight={800} fontSize={22} lineHeight={1}>
-                  ProjectHub
-                </Typography>
-
-                <Typography variant="caption" color="text.secondary">
-                  Project Management
-                </Typography>
-              </Box>
-            </Stack>
-
-            <Typography
-              variant="h2"
-              fontWeight={800}
+            Welcome to{" "}
+            <Box
+              component="span"
               sx={{
-                fontSize: {
-                  xs: "2.4rem",
-                  sm: "3rem",
-                  md: "3.7rem",
-                },
-                lineHeight: 1.1,
-                mb: 2,
+                color: "#FF8A3D",
               }}
             >
-              Everything your
+              ProjectHub
+            </Box>
+          </Typography>
+
+          {/* Description */}
+
+          <Typography
+            sx={{
+              maxWidth: 620,
+              mx: "auto",
+
+              color: "#3D332F",
+
+              fontSize: {
+                xs: "0.9rem",
+                sm: "1rem",
+                md: "1.05rem",
+              },
+
+              lineHeight: 1.7,
+
+              mb: 3.5,
+            }}
+          >
+            Organize your projects, manage tasks, and collaborate effortlessly
+            with your team — all in one place.
+          </Typography>
+
+          {/* =================================================
+              GET STARTED
+          ================================================== */}
+
+          <Button
+            variant="contained"
+            size="large"
+            endIcon={<ArrowForwardIcon />}
+            onClick={() => navigate("/signin")}
+            sx={{
+              minWidth: 190,
+
+              px: 4,
+              py: 1.4,
+
+              borderRadius: 3,
+
+              bgcolor: "#FF8A3D",
+              color: "#FFFFFF",
+
+              textTransform: "none",
+
+              fontWeight: 700,
+
+              fontSize: "1rem",
+
+              boxShadow: "0 10px 28px rgba(255,138,61,0.28)",
+
+              "&:hover": {
+                bgcolor: "#E76F22",
+
+                transform: "translateY(-2px)",
+
+                boxShadow: "0 14px 32px rgba(255,138,61,0.35)",
+              },
+
+              transition: "all 0.2s ease",
+            }}
+          >
+            Get Started
+          </Button>
+
+          {/* =================================================
+              FEATURES
+          ================================================== */}
+
+          <Box
+            sx={{
+              mt: {
+                xs: 5,
+                sm: 6,
+              },
+
+              mb: 3,
+
+              display: "flex",
+
+              justifyContent: "center",
+
+              alignItems: "stretch",
+
+              flexWrap: {
+                xs: "wrap",
+                sm: "nowrap",
+              },
+
+              width: "100%",
+
+              maxWidth: 800,
+
+              mx: "auto",
+
+              borderRadius: 4,
+
+              bgcolor: "rgba(255,255,255,0.72)",
+
+              border: "1px solid #F0E3D4",
+
+              boxShadow: "0 8px 25px rgba(27,27,29,0.05)",
+
+              overflow: "hidden",
+            }}
+          >
+            {features.map((feature, index) => (
               <Box
-                component="span"
+                key={feature.title}
                 sx={{
-                  display: "block",
-                  color: "primary.main",
-                }}
-              >
-                team needs.
-              </Box>
-            </Typography>
+                  flex: 1,
 
-            <Typography
-              color="text.secondary"
-              sx={{
-                fontSize: {
-                  xs: 16,
-                  md: 18,
-                },
-                lineHeight: 1.7,
-                maxWidth: 500,
-                mb: 4,
-              }}
-            >
-              Organize projects, manage tasks, collaborate with your team and
-              stay on top of deadlines—all from one simple workspace.
-            </Typography>
-
-            <Stack spacing={2.2} mb={5}>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                }}
-              >
-                <Box
-                  sx={{
-                    width: 46,
-                    height: 46,
-                    flexShrink: 0,
-                    borderRadius: 2.5,
-                    bgcolor: "primary.light",
-                    color: "primary.main",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <TaskAltIcon />
-                </Box>
-
-                <Box>
-                  <Typography fontWeight={700}>
-                    Smart Task Management
-                  </Typography>
-
-                  <Typography variant="body2" color="text.secondary">
-                    Create, track and complete tasks with ease.
-                  </Typography>
-                </Box>
-              </Box>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                }}
-              >
-                <Box
-                  sx={{
-                    width: 46,
-                    height: 46,
-                    flexShrink: 0,
-                    borderRadius: 2.5,
-                    bgcolor: "#E8F5E9",
-                    color: "success.main",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <GroupsIcon />
-                </Box>
-
-                <Box>
-                  <Typography fontWeight={700}>Team Collaboration</Typography>
-
-                  <Typography variant="body2" color="text.secondary">
-                    Keep everyone aligned and productive.
-                  </Typography>
-                </Box>
-              </Box>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                }}
-              >
-                <Box
-                  sx={{
-                    width: 46,
-                    height: 46,
-                    flexShrink: 0,
-                    borderRadius: 2.5,
-                    bgcolor: "#FFF3E0",
-                    color: "warning.main",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <CalendarMonthIcon />
-                </Box>
-
-                <Box>
-                  <Typography fontWeight={700}>Stay on Schedule</Typography>
-
-                  <Typography variant="body2" color="text.secondary">
-                    Manage deadlines and upcoming events.
-                  </Typography>
-                </Box>
-              </Box>
-            </Stack>
-
-            <Stack
-              direction={{
-                xs: "column",
-                sm: "row",
-              }}
-              spacing={2}
-            >
-              <Button
-                variant="contained"
-                size="large"
-                endIcon={<ArrowForwardIcon />}
-                onClick={() => navigate("/signin")}
-                sx={{
-                  px: 4,
-                  py: 1.5,
-                  borderRadius: 3,
-                  textTransform: "none",
-                  fontWeight: 700,
-                  fontSize: 16,
-                  boxShadow: "0 8px 20px rgba(255,127,51,0.25)",
-                }}
-              >
-                Get Started
-              </Button>
-
-              <Button
-                variant="outlined"
-                size="large"
-                startIcon={<LoginIcon />}
-                onClick={() => navigate("/signin")}
-                sx={{
-                  px: 4,
-                  py: 1.5,
-                  borderRadius: 3,
-                  textTransform: "none",
-                  fontWeight: 700,
-                  fontSize: 16,
-                }}
-              >
-                Sign In
-              </Button>
-            </Stack>
-
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 3 }}>
-              New to ProjectHub?{" "}
-              <Box
-                component="span"
-                onClick={() => navigate("/signup")}
-                sx={{
-                  color: "primary.main",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  "&:hover": {
-                    textDecoration: "underline",
+                  minWidth: {
+                    xs: "50%",
+                    sm: 0,
                   },
+
+                  py: {
+                    xs: 1.8,
+                    sm: 2,
+                  },
+
+                  px: {
+                    xs: 1,
+                    sm: 1.5,
+                  },
+
+                  display: "flex",
+
+                  alignItems: "center",
+
+                  justifyContent: "center",
+
+                  gap: {
+                    xs: 1,
+                    sm: 1.2,
+                  },
+
+                  borderRight:
+                    index !== features.length - 1
+                      ? {
+                          xs: index === 1 ? "none" : "1px solid #F0E3D4",
+                          sm: "1px solid #F0E3D4",
+                        }
+                      : "none",
+
+                  borderBottom:
+                    index < 2
+                      ? {
+                          xs: "1px solid #F0E3D4",
+                          sm: "none",
+                        }
+                      : "none",
                 }}
               >
-                Create an account
+                {/* Icon */}
+
+                <Box
+                  sx={{
+                    width: 42,
+                    height: 42,
+
+                    borderRadius: "50%",
+
+                    bgcolor:
+                      index === 0
+                        ? "#FFF0E5"
+                        : index === 1
+                          ? "#F4EEFF"
+                          : index === 2
+                            ? "#EAF8EF"
+                            : "#EDF4FF",
+
+                    color:
+                      index === 0
+                        ? "#FF8A3D"
+                        : index === 1
+                          ? "#7B61FF"
+                          : index === 2
+                            ? "#22A060"
+                            : "#3976D2",
+
+                    display: "flex",
+
+                    alignItems: "center",
+
+                    justifyContent: "center",
+
+                    flexShrink: 0,
+
+                    "& svg": {
+                      fontSize: 21,
+                    },
+                  }}
+                >
+                  {feature.icon}
+                </Box>
+
+                {/* Text */}
+
+                <Box
+                  sx={{
+                    textAlign: "left",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontWeight: 700,
+                      fontSize: {
+                        xs: 12,
+                        sm: 13,
+                      },
+
+                      lineHeight: 1.2,
+
+                      color: "#1B1B1D",
+                    }}
+                  >
+                    {feature.title}
+                  </Typography>
+
+                  <Typography
+                    sx={{
+                      fontSize: {
+                        xs: 11,
+                        sm: 12,
+                      },
+
+                      color: "#7A6A62",
+
+                      mt: 0.2,
+                    }}
+                  >
+                    {feature.subtitle}
+                  </Typography>
+                </Box>
               </Box>
-            </Typography>
+            ))}
           </Box>
+
+          {/* =================================================
+              FOOTER TAGLINE
+          ================================================== */}
+
+          <Typography
+            sx={{
+              color: "#A08F86",
+
+              fontSize: {
+                xs: 9,
+                sm: 10,
+              },
+
+              letterSpacing: {
+                xs: "0.18em",
+                sm: "0.3em",
+              },
+
+              fontWeight: 600,
+
+              pb: 3,
+            }}
+          >
+            PLAN&nbsp;&nbsp;•&nbsp;&nbsp; COLLABORATE&nbsp;&nbsp;•&nbsp;&nbsp;
+            ACHIEVE
+          </Typography>
         </Box>
       </Box>
     </AuthLayout>

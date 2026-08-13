@@ -1,20 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
 
 import App from "./App";
-import ThemeProvider from "./theme/ThemeProvider";
-import store from "./app/store";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+import ThemeProvider from "./theme/ThemeProvider";
+import NotificationProvider from "./context/NotificationContext";
+
+ReactDOM.createRoot(
+  document.getElementById("root")
+).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider>
+    <ThemeProvider>
+      <NotificationProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      </ThemeProvider>
-    </Provider>
+      </NotificationProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );

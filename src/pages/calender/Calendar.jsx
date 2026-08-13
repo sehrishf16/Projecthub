@@ -13,6 +13,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined";
+import { useNotifications } from "../../context/NotificationContext";
 
 import { Calendar, dateFnsLocalizer, Views } from "react-big-calendar";
 
@@ -49,14 +50,42 @@ const CalendarPage = () => {
 
   const [editingEvent, setEditingEvent] = useState(null);
 
+  const { addNotification } = useNotifications();
+
   const saveEvent = (event) => {
     if (editingEvent) {
       setEvents((prev) =>
         prev.map((item) => (item.id === event.id ? event : item)),
       );
-    } else {
-      setEvents((prev) => [...prev, event]);
+
+      setEditingEvent(null);
+      return;
     }
+
+    setEvents((prev) => [...prev, event]);
+
+    const eventDate = new Date(event.start);
+
+    const formattedDate = eventDate.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+
+    const formattedTime = eventDate.toLocaleTimeString("en-IN", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    addNotification({
+      title: "New Event Pinned",
+
+      message: `Sehrish pinned "${event.title}" on ${formattedDate} at ${formattedTime}.`,
+
+      type: "event",
+
+      eventId: event.id,
+    });
 
     setEditingEvent(null);
   };

@@ -3,9 +3,6 @@ import { useState } from "react";
 import { Box, Card, CardContent, Tab, Tabs, Typography } from "@mui/material";
 
 import PersonIcon from "@mui/icons-material/Person";
-import PaletteIcon from "@mui/icons-material/Palette";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import SecurityIcon from "@mui/icons-material/Security";
 import InfoIcon from "@mui/icons-material/Info";
 
 import ProfileSettings from "../../components/settings/ProfileSettings";
@@ -23,7 +20,7 @@ const Settings = () => {
       case 0:
         return <ProfileSettings />;
 
-      case 2:
+      case 1:
         return <AboutSettings />;
 
       default:
@@ -32,34 +29,105 @@ const Settings = () => {
   };
 
   return (
-    <Box>
-      <Typography variant="h4" fontWeight={700} mb={1}>
-        Settings
-      </Typography>
+    <Box
+      sx={{
+        width: "100%",
+      }}
+    >
+      <Box sx={{ mb: 4 }}>
+        <Typography
+          variant="h4"
+          fontWeight={700}
+          sx={{
+            fontSize: {
+              xs: "1.8rem",
+              sm: "2.2rem",
+              md: "2.4rem",
+            },
+          }}
+        >
+          Settings
+        </Typography>
 
-      <Typography color="text.secondary" mb={4}>
-        Manage your account and application preferences.
-      </Typography>
+        <Typography
+          color="text.secondary"
+          sx={{
+            mt: 0.5,
+          }}
+        >
+          Manage your account and application preferences.
+        </Typography>
+      </Box>
 
       <Card
         elevation={0}
         sx={{
+          width: "100%",
+
           borderRadius: 2,
+
           border: "1px solid",
           borderColor: "divider",
+
+          overflow: "hidden",
+
+          bgcolor: "background.paper",
         }}
       >
-        <CardContent sx={{ p: 0 }}>
+        <CardContent
+          sx={{
+            p: 0,
+          }}
+        >
           <Tabs
             value={tab}
             onChange={handleChange}
             variant="scrollable"
             scrollButtons="auto"
             sx={{
-              px: 2,
-              pt: 2,
+              px: {
+                xs: 1,
+                sm: 2,
+              },
+
+              pt: 1.5,
+
+              minHeight: 58,
+
               borderBottom: "1px solid",
               borderColor: "divider",
+
+              "& .MuiTab-root": {
+                minHeight: 58,
+
+                px: {
+                  xs: 1.5,
+                  sm: 2.5,
+                },
+
+                textTransform: "none",
+
+                fontWeight: 600,
+
+                fontSize: {
+                  xs: "0.85rem",
+                  sm: "0.95rem",
+                },
+
+                color: "text.secondary",
+              },
+
+              "& .Mui-selected": {
+                color: "primary.main",
+              },
+
+              "& .MuiTabs-indicator": {
+                height: 3,
+
+                borderRadius: "3px 3px 0 0",
+
+                backgroundColor: "primary.main",
+              },
             }}
           >
             <Tab icon={<PersonIcon />} iconPosition="start" label="Profile" />
@@ -69,7 +137,11 @@ const Settings = () => {
 
           <Box
             sx={{
-              p: 3,
+              p: {
+                xs: 1.5,
+                sm: 2.5,
+                md: 3,
+              },
             }}
           >
             {renderContent()}
