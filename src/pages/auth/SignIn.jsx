@@ -42,10 +42,9 @@ const SignIn = () => {
   });
 
   const [error, setError] = useState("");
-
   const [success, setSuccess] = useState(false);
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
@@ -54,7 +53,7 @@ const SignIn = () => {
     setError("");
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setError("");
@@ -86,14 +85,15 @@ const SignIn = () => {
       } catch {
         localStorage.removeItem("projecthub_user");
 
-        setError("Unable to read account information. Please sign up again.");
+        setError(
+          "Unable to read account information. Please sign up again.",
+        );
 
         return;
       }
 
       if (user.email !== email || user.password !== form.password) {
         setError("Invalid email or password.");
-
         return;
       }
     } else {
@@ -110,9 +110,17 @@ const SignIn = () => {
       role: user.role || "Team Member",
     });
 
+    // Remember me
+    if (remember) {
+      localStorage.setItem("projecthub_remember", "true");
+    } else {
+      localStorage.removeItem("projecthub_remember");
+    }
+
     setSuccess(true);
 
-    const redirectPath = location.state?.from?.pathname || "/dashboard";
+    const redirectPath =
+      location.state?.from?.pathname || "/dashboard";
 
     setTimeout(() => {
       navigate(redirectPath, {
@@ -143,6 +151,7 @@ const SignIn = () => {
             },
           }}
         >
+          {/* Back Button */}
           <IconButton
             onClick={() => navigate("/")}
             sx={{
@@ -156,6 +165,7 @@ const SignIn = () => {
             <ArrowBackIcon />
           </IconButton>
 
+          {/* Header */}
           <Stack alignItems="center" spacing={2} mb={4}>
             <Avatar
               sx={{
@@ -171,16 +181,23 @@ const SignIn = () => {
             </Avatar>
 
             <Box textAlign="center">
-              <Typography variant="h4" fontWeight={800}>
+              <Typography
+                variant="h4"
+                fontWeight={800}
+              >
                 Welcome Back!
               </Typography>
 
-              <Typography color="text.secondary" mt={1}>
+              <Typography
+                color="text.secondary"
+                mt={1}
+              >
                 Sign in to continue to ProjectHub
               </Typography>
             </Box>
           </Stack>
 
+          {/* Error */}
           {error && (
             <Alert
               severity="error"
@@ -193,8 +210,13 @@ const SignIn = () => {
             </Alert>
           )}
 
-          <Box component="form" onSubmit={handleSubmit}>
+          {/* Login Form */}
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+          >
             <Stack spacing={2.5}>
+              {/* Email */}
               <TextField
                 fullWidth
                 required
@@ -207,6 +229,7 @@ const SignIn = () => {
                 placeholder="you@example.com"
               />
 
+              {/* Password */}
               <TextField
                 fullWidth
                 required
@@ -223,10 +246,21 @@ const SignIn = () => {
                       <IconButton
                         type="button"
                         edge="end"
-                        onClick={() => setShowPassword((prev) => !prev)}
-                        aria-label={
-                          showPassword ? "Hide password" : "Show password"
+                        onClick={() =>
+                          setShowPassword((prev) => !prev)
                         }
+                        onMouseDown={(event) =>
+                          event.preventDefault()
+                        }
+                        aria-label={
+                          showPassword
+                            ? "Hide password"
+                            : "Show password"
+                        }
+                        sx={{
+                          color: "text.secondary",
+                          mr: 0.5,
+                        }}
                       >
                         {showPassword ? (
                           <VisibilityOffIcon />
@@ -239,6 +273,7 @@ const SignIn = () => {
                 }}
               />
 
+              {/* Remember + Forgot Password */}
               <Box
                 sx={{
                   display: "flex",
@@ -252,7 +287,9 @@ const SignIn = () => {
                   control={
                     <Checkbox
                       checked={remember}
-                      onChange={(event) => setRemember(event.target.checked)}
+                      onChange={(event) =>
+                        setRemember(event.target.checked)
+                      }
                     />
                   }
                   label="Remember me"
@@ -275,6 +312,7 @@ const SignIn = () => {
                 </Button>
               </Box>
 
+              {/* Sign In Button */}
               <Button
                 type="submit"
                 variant="contained"
@@ -287,7 +325,8 @@ const SignIn = () => {
                   textTransform: "none",
                   fontWeight: 700,
                   fontSize: 16,
-                  boxShadow: "0 8px 20px rgba(255,127,51,0.25)",
+                  boxShadow:
+                    "0 8px 20px rgba(255,127,51,0.25)",
                 }}
               >
                 Sign In
@@ -295,8 +334,14 @@ const SignIn = () => {
             </Stack>
           </Box>
 
-          <Typography textAlign="center" color="text.secondary" mt={4}>
+          {/* Sign Up */}
+          <Typography
+            textAlign="center"
+            color="text.secondary"
+            mt={4}
+          >
             Don't have an account?{" "}
+
             <Box
               component="span"
               onClick={() => navigate("/signup")}
@@ -315,6 +360,7 @@ const SignIn = () => {
         </CardContent>
       </Card>
 
+      {/* Success Snackbar */}
       <Snackbar
         open={success}
         autoHideDuration={1000}
@@ -324,7 +370,10 @@ const SignIn = () => {
           horizontal: "right",
         }}
       >
-        <Alert severity="success" variant="filled">
+        <Alert
+          severity="success"
+          variant="filled"
+        >
           Login successful! Redirecting...
         </Alert>
       </Snackbar>
