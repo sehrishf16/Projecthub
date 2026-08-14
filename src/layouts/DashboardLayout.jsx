@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
@@ -5,6 +6,16 @@ import Sidebar from "../components/layout/Sidebar";
 import Navbar from "../components/layout/Navbar";
 
 const DashboardLayout = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prev) => !prev);
+  };
+
+  const handleDrawerClose = () => {
+    setMobileOpen(false);
+  };
+
   return (
     <Box
       sx={{
@@ -14,12 +25,17 @@ const DashboardLayout = () => {
       }}
     >
       
-      <Sidebar />
+      <Sidebar
+        mobileOpen={mobileOpen}
+        onClose={handleDrawerClose}
+      />
 
-    
-      <Navbar />
+      
+      <Navbar
+        onMenuClick={handleDrawerToggle}
+      />
 
-     
+      
       <Box
         component="main"
         sx={{
@@ -38,6 +54,7 @@ const DashboardLayout = () => {
           minHeight: "100vh",
 
           bgcolor: "background.default",
+
           pt: {
             xs: "80px",
             md: "88px",
