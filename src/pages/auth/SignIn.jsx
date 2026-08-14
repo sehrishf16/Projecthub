@@ -25,7 +25,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import AuthLayout from "../../components/auth/AuthLayout";
-
 import { loginUser } from "../../utils/session";
 
 const SignIn = () => {
@@ -44,7 +43,7 @@ const SignIn = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event) => {
     setForm((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
@@ -53,7 +52,7 @@ const SignIn = () => {
     setError("");
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     setError("");
@@ -110,7 +109,6 @@ const SignIn = () => {
       role: user.role || "Team Member",
     });
 
-    // Remember me
     if (remember) {
       localStorage.setItem("projecthub_remember", "true");
     } else {
@@ -181,23 +179,17 @@ const SignIn = () => {
             </Avatar>
 
             <Box textAlign="center">
-              <Typography
-                variant="h4"
-                fontWeight={800}
-              >
+              <Typography variant="h4" fontWeight={800}>
                 Welcome Back!
               </Typography>
 
-              <Typography
-                color="text.secondary"
-                mt={1}
-              >
+              <Typography color="text.secondary" mt={1}>
                 Sign in to continue to ProjectHub
               </Typography>
             </Box>
           </Stack>
 
-          {/* Error */}
+          {/* Error Message */}
           {error && (
             <Alert
               severity="error"
@@ -211,10 +203,7 @@ const SignIn = () => {
           )}
 
           {/* Login Form */}
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-          >
+          <Box component="form" onSubmit={handleSubmit}>
             <Stack spacing={2.5}>
               {/* Email */}
               <TextField
@@ -273,7 +262,7 @@ const SignIn = () => {
                 }}
               />
 
-              {/* Remember + Forgot Password */}
+              {/* Remember Me + Forgot Password */}
               <Box
                 sx={{
                   display: "flex",
@@ -370,10 +359,7 @@ const SignIn = () => {
           horizontal: "right",
         }}
       >
-        <Alert
-          severity="success"
-          variant="filled"
-        >
+        <Alert severity="success" variant="filled">
           Login successful! Redirecting...
         </Alert>
       </Snackbar>
@@ -381,4 +367,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignIn;git 
