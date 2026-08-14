@@ -13,7 +13,7 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 // import RecentActivity from "../../components/dashboard/RecentActivity";
 // import UpcomingDeadlines from "../../components/dashboard/UpcomingDeadlines";
 // import TaskStatusChart from "../../components/dashboard/TaskStatusChart";
-// import StatCard from "../../components/dashboard/StatCard";
+import StatCard from "../../components/dashboard/StatCard";
 import AnalyticsChart from "../../components/dashboard/AnalyticsChart";
 
 import { useNotifications } from "../../context/NotificationContext";
