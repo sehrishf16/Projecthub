@@ -1,19 +1,23 @@
 import { useState } from "react";
-import { Box } from "@mui/material";
+
+import {
+  Box,
+  Toolbar,
+} from "@mui/material";
+
 import { Outlet } from "react-router-dom";
 
 import Sidebar from "../components/layout/Sidebar";
 import Navbar from "../components/layout/Navbar";
 
+const drawerWidth = 260;
+
 const DashboardLayout = () => {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] =
+    useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prev) => !prev);
-  };
-
-  const handleDrawerClose = () => {
-    setMobileOpen(false);
   };
 
   return (
@@ -24,18 +28,17 @@ const DashboardLayout = () => {
         bgcolor: "background.default",
       }}
     >
-      
+      {/* SIDEBAR */}
+
       <Sidebar
         mobileOpen={mobileOpen}
-        onClose={handleDrawerClose}
+        handleDrawerToggle={
+          handleDrawerToggle
+        }
       />
 
-      
-      <Navbar
-        onMenuClick={handleDrawerToggle}
-      />
+      {/* MAIN AREA */}
 
-      
       <Box
         component="main"
         sx={{
@@ -43,33 +46,40 @@ const DashboardLayout = () => {
 
           width: {
             xs: "100%",
-            md: "calc(100% - 260px)",
-          },
-
-          ml: {
-            xs: 0,
-            md: "260px",
+            md: `calc(100% - ${drawerWidth}px)`,
           },
 
           minHeight: "100vh",
 
-          bgcolor: "background.default",
-
-          pt: {
-            xs: "80px",
-            md: "88px",
-          },
-
-          px: {
-            xs: 2,
-            sm: 3,
-            md: 3,
-          },
-
-          pb: 4,
+          bgcolor:
+            "background.default",
         }}
       >
-        <Outlet />
+        {/* NAVBAR */}
+
+        <Navbar
+          handleDrawerToggle={
+            handleDrawerToggle
+          }
+        />
+
+        {/* Navbar spacing */}
+
+        <Toolbar />
+
+        {/* PAGE CONTENT */}
+
+        <Box
+          sx={{
+            p: {
+              xs: 2,
+              sm: 2.5,
+              md: 3,
+            },
+          }}
+        >
+          <Outlet />
+        </Box>
       </Box>
     </Box>
   );

@@ -84,9 +84,7 @@ const SignIn = () => {
       } catch {
         localStorage.removeItem("projecthub_user");
 
-        setError(
-          "Unable to read account information. Please sign up again.",
-        );
+        setError("Unable to read account information. Please sign up again.");
 
         return;
       }
@@ -117,8 +115,7 @@ const SignIn = () => {
 
     setSuccess(true);
 
-    const redirectPath =
-      location.state?.from?.pathname || "/dashboard";
+    const redirectPath = location.state?.from?.pathname || "/dashboard";
 
     setTimeout(() => {
       navigate(redirectPath, {
@@ -219,48 +216,66 @@ const SignIn = () => {
               />
 
               {/* Password */}
-              <TextField
-                fullWidth
-                required
-                label="Password"
-                name="password"
-                type={showPassword ? "text" : "password"}
-                autoComplete="current-password"
-                value={form.password}
-                onChange={handleChange}
-                placeholder="Enter your password"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        type="button"
-                        edge="end"
-                        onClick={() =>
-                          setShowPassword((prev) => !prev)
-                        }
-                        onMouseDown={(event) =>
-                          event.preventDefault()
-                        }
-                        aria-label={
-                          showPassword
-                            ? "Hide password"
-                            : "Show password"
-                        }
-                        sx={{
-                          color: "text.secondary",
-                          mr: 0.5,
-                        }}
-                      >
-                        {showPassword ? (
-                          <VisibilityOffIcon />
-                        ) : (
-                          <VisibilityIcon />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
+              <Box
+                sx={{
+                  position: "relative",
+                  width: "100%",
                 }}
-              />
+              >
+                <TextField
+                  fullWidth
+                  required
+                  label="Password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
+                  value={form.password}
+                  onChange={handleChange}
+                  placeholder="Enter your password"
+                  sx={{
+                    "& .MuiInputBase-input": {
+                      paddingRight: "55px",
+                    },
+                  }}
+                />
+
+                <IconButton
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  onMouseDown={(event) => event.preventDefault()}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  sx={{
+                    position: "absolute",
+                    right: "8px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+
+                    width: 40,
+                    height: 40,
+
+                    color: "#ffffff !important",
+                    zIndex: 20,
+
+                    display: "flex !important",
+                    visibility: "visible !important",
+                    opacity: "1 !important",
+
+                    "& svg": {
+                      color: "#ffffff !important",
+                      fontSize: "24px",
+                      display: "block !important",
+                      visibility: "visible !important",
+                      opacity: "1 !important",
+                    },
+
+                    "&:hover": {
+                      backgroundColor: "rgba(255, 255, 255, 0.10)",
+                    },
+                  }}
+                >
+                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                </IconButton>
+              </Box>
 
               {/* Remember Me + Forgot Password */}
               <Box
@@ -276,9 +291,7 @@ const SignIn = () => {
                   control={
                     <Checkbox
                       checked={remember}
-                      onChange={(event) =>
-                        setRemember(event.target.checked)
-                      }
+                      onChange={(event) => setRemember(event.target.checked)}
                     />
                   }
                   label="Remember me"
@@ -314,8 +327,7 @@ const SignIn = () => {
                   textTransform: "none",
                   fontWeight: 700,
                   fontSize: 16,
-                  boxShadow:
-                    "0 8px 20px rgba(255,127,51,0.25)",
+                  boxShadow: "0 8px 20px rgba(255,127,51,0.25)",
                 }}
               >
                 Sign In
@@ -324,13 +336,8 @@ const SignIn = () => {
           </Box>
 
           {/* Sign Up */}
-          <Typography
-            textAlign="center"
-            color="text.secondary"
-            mt={4}
-          >
+          <Typography textAlign="center" color="text.secondary" mt={4}>
             Don't have an account?{" "}
-
             <Box
               component="span"
               onClick={() => navigate("/signup")}
@@ -338,6 +345,7 @@ const SignIn = () => {
                 color: "primary.main",
                 fontWeight: 700,
                 cursor: "pointer",
+
                 "&:hover": {
                   textDecoration: "underline",
                 },
@@ -367,4 +375,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;git 
+export default SignIn;
