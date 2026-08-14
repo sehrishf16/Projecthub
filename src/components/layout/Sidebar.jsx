@@ -72,17 +72,8 @@ const Sidebar = ({
   ====================================================== */
 
   const handleLogout = () => {
-    /*
-     * Remove login/session data if you
-     * are storing any authentication data.
-     */
-
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("user");
-
-    /*
-     * Redirect to Welcome screen
-     */
 
     navigate("/", {
       replace: true,
@@ -90,42 +81,88 @@ const Sidebar = ({
   };
 
   /* =====================================================
+     MOBILE MENU ITEM CLICK
+  ====================================================== */
+
+  const handleMenuClick = () => {
+    if (mobileOpen) {
+      handleDrawerToggle();
+    }
+  };
+
+  /* =====================================================
      DRAWER CONTENT
   ====================================================== */
 
   const drawerContent = (
-    <>
-      {/* Logo */}
+    <Box
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        bgcolor: "#1B1B1D",
+        color: "#fff",
+      }}
+    >
+      {/* LOGO */}
 
-      <Logo />
+      <Box
+        sx={{
+          flexShrink: 0,
+        }}
+      >
+        <Logo />
+      </Box>
 
-      {/* Navigation */}
+      {/* MENU */}
 
-      <List sx={{ mt: 2 }}>
+      <List
+        sx={{
+          mt: 2,
+          px: 0.5,
+          flex: 1,
+          overflowY: "auto",
+
+          "&::-webkit-scrollbar": {
+            width: 4,
+          },
+
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor:
+              "rgba(255,255,255,0.15)",
+            borderRadius: 10,
+          },
+        }}
+      >
         {menuItems.map((item) => (
           <ListItemButton
             key={item.title}
             component={NavLink}
             to={item.path}
-            onClick={() => {
-              /*
-               * Close mobile drawer after
-               * selecting a page.
-               */
-
-              if (
-                mobileOpen &&
-                handleDrawerToggle
-              ) {
-                handleDrawerToggle();
-              }
-            }}
+            onClick={handleMenuClick}
             sx={{
-              mx: 1.5,
+              mx: 1,
               mb: 1,
-              borderRadius: 1,
+              borderRadius: 1.5,
 
-              color: "#fff",
+              color: "rgba(255,255,255,0.85)",
+
+              minHeight: 48,
+
+              "& .MuiListItemIcon-root": {
+                color:
+                  "rgba(255,255,255,0.75)",
+              },
+
+              "&:hover": {
+                bgcolor:
+                  "rgba(255,138,61,0.12)",
+                color: "#fff",
+
+                "& .MuiListItemIcon-root": {
+                  color: "#fff",
+                },
+              },
 
               "&.active": {
                 bgcolor: "primary.main",
@@ -134,18 +171,15 @@ const Sidebar = ({
                 "& .MuiListItemIcon-root": {
                   color: "#fff",
                 },
-              },
 
-              "&:hover": {
-                bgcolor:
-                  "rgba(255,138,61,0.12)",
+                "&:hover": {
+                  bgcolor: "primary.dark",
+                },
               },
             }}
           >
             <ListItemIcon
               sx={{
-                color:
-                  "rgba(255,255,255,.8)",
                 minWidth: 42,
               }}
             >
@@ -154,49 +188,65 @@ const Sidebar = ({
 
             <ListItemText
               primary={item.title}
+              primaryTypographyProps={{
+                fontWeight: 500,
+              }}
             />
           </ListItemButton>
         ))}
       </List>
 
-      {/* Push Logout to bottom */}
+      {/* LOGOUT */}
 
-      <Box sx={{ flexGrow: 1 }} />
-
-      {/* Logout */}
-
-      <List>
-        <ListItemButton
-          onClick={handleLogout}
-          sx={{
-            mx: 1.5,
-            mb: 2,
-            borderRadius: 1,
-
-            color: "#fff",
-
-            "&:hover": {
-              bgcolor:
-                "rgba(255,138,61,0.12)",
-            },
-          }}
-        >
-          <ListItemIcon
+      <Box
+        sx={{
+          flexShrink: 0,
+          pb: 1,
+        }}
+      >
+        <List>
+          <ListItemButton
+            onClick={handleLogout}
             sx={{
+              mx: 1,
+              borderRadius: 1.5,
+
+              minHeight: 48,
+
               color:
-                "rgba(255,255,255,.8)",
-              minWidth: 42,
+                "rgba(255,255,255,0.85)",
+
+              "& .MuiListItemIcon-root": {
+                color:
+                  "rgba(255,255,255,0.75)",
+              },
+
+              "&:hover": {
+                bgcolor:
+                  "rgba(255,138,61,0.12)",
+                color: "#fff",
+
+                "& .MuiListItemIcon-root": {
+                  color: "#fff",
+                },
+              },
             }}
           >
-            <LogoutIcon />
-          </ListItemIcon>
+            <ListItemIcon
+              sx={{
+                minWidth: 42,
+              }}
+            >
+              <LogoutIcon />
+            </ListItemIcon>
 
-          <ListItemText
-            primary="Logout"
-          />
-        </ListItemButton>
-      </List>
-    </>
+            <ListItemText
+              primary="Logout"
+            />
+          </ListItemButton>
+        </List>
+      </Box>
+    </Box>
   );
 
   return (
@@ -207,7 +257,8 @@ const Sidebar = ({
 
       <Drawer
         variant="temporary"
-        open={mobileOpen}
+        anchor="left"
+        open={Boolean(mobileOpen)}
         onClose={handleDrawerToggle}
         ModalProps={{
           keepMounted: true,
@@ -220,8 +271,10 @@ const Sidebar = ({
 
           "& .MuiDrawer-paper": {
             width: drawerWidth,
+            boxSizing: "border-box",
             bgcolor: "#1B1B1D",
             color: "#fff",
+            border: "none",
           },
         }}
       >
@@ -234,32 +287,29 @@ const Sidebar = ({
 
       <Drawer
         variant="permanent"
+        open
         sx={{
           display: {
             xs: "none",
             md: "block",
           },
 
+          width: drawerWidth,
+
+          flexShrink: 0,
+
           "& .MuiDrawer-paper": {
             width: drawerWidth,
+            boxSizing: "border-box",
             bgcolor: "#1B1B1D",
             color: "#fff",
             border: "none",
           },
         }}
-        open
       >
         <Toolbar />
 
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            height: "100%",
-          }}
-        >
-          {drawerContent}
-        </Box>
+        {drawerContent}
       </Drawer>
     </>
   );
