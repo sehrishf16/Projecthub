@@ -674,22 +674,7 @@ const Navbar = ({ handleDrawerToggle }) => {
               )}
             </Box>
 
-            <Avatar
-              sx={{
-                bgcolor: "primary.main",
-
-                color: "primary.contrastText",
-
-                cursor: "pointer",
-
-                width: 38,
-                height: 38,
-
-                fontWeight: 700,
-              }}
-            >
-              S
-            </Avatar>
+            
           </Box>
         </Toolbar>
       </AppBar>

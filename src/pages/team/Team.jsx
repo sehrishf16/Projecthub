@@ -9,41 +9,75 @@ import MemberDialog from "../../components/team/MemberDialog";
 import DeleteMemberDialog from "../../components/team/DeleteMemberDialog";
 
 const Team = () => {
-
   const [members, setMembers] = useState(() => {
-    const saved = localStorage.getItem("members");
-    return saved ? JSON.parse(saved) : initialMembers;
+    try {
+      const saved = localStorage.getItem("members");
+
+      return saved
+        ? JSON.parse(saved)
+        : initialMembers;
+    } catch (error) {
+      console.error(
+        "Unable to load team members",
+        error
+      );
+
+      return initialMembers;
+    }
   });
 
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("All");
 
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [editingMember, setEditingMember] = useState(null);
+  const [dialogOpen, setDialogOpen] =
+    useState(false);
 
-  const [deleteOpen, setDeleteOpen] = useState(false);
-  const [selectedMember, setSelectedMember] = useState(null);
+  const [editingMember, setEditingMember] =
+    useState(null);
+
+  const [deleteOpen, setDeleteOpen] =
+    useState(false);
+
+  const [selectedMember, setSelectedMember] =
+    useState(null);
 
   const [page, setPage] = useState(1);
+
   const rowsPerPage = 5;
 
+  
+
   useEffect(() => {
-    localStorage.setItem("members", JSON.stringify(members));
+    localStorage.setItem(
+      "members",
+      JSON.stringify(members)
+    );
+
+    /*
+     * Tell Dashboard that team data changed.
+     */
+    window.dispatchEvent(
+      new Event("projecthub:data-updated")
+    );
   }, [members]);
 
+  
+
   const addMember = (member) => {
+    const newMember = {
+      ...member,
+      id: Date.now(),
+    };
+
     setMembers((prev) => [
       ...prev,
-      {
-        ...member,
-        id: Date.now(),
-      },
+      newMember,
     ]);
 
     setPage(1);
   };
 
-
+  
   const updateMember = (updatedMember) => {
     setMembers((prev) =>
       prev.map((member) =>
@@ -54,23 +88,31 @@ const Team = () => {
     );
   };
 
+  
 
   const editMember = (member) => {
     setEditingMember(member);
     setDialogOpen(true);
   };
 
-  
+ 
+
   const deleteMember = (member) => {
     setSelectedMember(member);
     setDeleteOpen(true);
   };
 
+  
 
   const confirmDelete = () => {
+    if (!selectedMember) {
+      return;
+    }
+
     setMembers((prev) =>
       prev.filter(
-        (member) => member.id !== selectedMember.id
+        (member) =>
+          member.id !== selectedMember.id
       )
     );
 
@@ -79,38 +121,59 @@ const Team = () => {
     setPage(1);
   };
 
- 
-  const filteredMembers = members.filter((member) => {
-    const matchesSearch =
-      member.name
-        .toLowerCase()
-        .includes(search.toLowerCase()) ||
-      member.email
-        .toLowerCase()
-        .includes(search.toLowerCase());
+  
 
-    const matchesStatus =
-      status === "All" ||
-      member.status === status;
+  const filteredMembers = members.filter(
+    (member) => {
+      const memberName =
+        member.name || "";
 
-    return matchesSearch && matchesStatus;
-  });
+      const memberEmail =
+        member.email || "";
+
+      const matchesSearch =
+        memberName
+          .toLowerCase()
+          .includes(
+            search.toLowerCase()
+          ) ||
+        memberEmail
+          .toLowerCase()
+          .includes(
+            search.toLowerCase()
+          );
+
+      const matchesStatus =
+        status === "All" ||
+        member.status === status;
+
+      return (
+        matchesSearch &&
+        matchesStatus
+      );
+    }
+  );
 
   
-  const paginatedMembers = filteredMembers.slice(
-    (page - 1) * rowsPerPage,
-    page * rowsPerPage
-  );
+
+  const paginatedMembers =
+    filteredMembers.slice(
+      (page - 1) * rowsPerPage,
+      page * rowsPerPage
+    );
 
   return (
     <Box>
+     
+
       <Typography
         variant="h4"
         fontWeight={700}
-       
       >
         Team Members
       </Typography>
+
+      
 
       <TeamToolbar
         onAdd={() => {
@@ -129,12 +192,15 @@ const Team = () => {
         }}
       />
 
+    
+
       <TeamTable
         members={paginatedMembers}
         onEdit={editMember}
         onDelete={deleteMember}
       />
 
+     
       <Box
         sx={{
           display: "flex",
@@ -144,12 +210,22 @@ const Team = () => {
       >
         <Pagination
           page={page}
-          count={Math.ceil(filteredMembers.length / rowsPerPage)}
-          onChange={(e, value) => setPage(value)}
+          count={Math.max(
+            1,
+            Math.ceil(
+              filteredMembers.length /
+                rowsPerPage
+            )
+          )}
+          onChange={(event, value) =>
+            setPage(value)
+          }
           color="primary"
           shape="rounded"
         />
       </Box>
+
+     
 
       <MemberDialog
         open={dialogOpen}
@@ -162,11 +238,18 @@ const Team = () => {
         editingMember={editingMember}
       />
 
+
+
       <DeleteMemberDialog
         open={deleteOpen}
-        handleClose={() => setDeleteOpen(false)}
+        handleClose={() => {
+          setDeleteOpen(false);
+          setSelectedMember(null);
+        }}
         handleDelete={confirmDelete}
-        memberName={selectedMember?.name}
+        memberName={
+          selectedMember?.name
+        }
       />
     </Box>
   );

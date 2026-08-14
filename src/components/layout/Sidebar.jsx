@@ -17,7 +17,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ViewKanbanIcon from "@mui/icons-material/ViewKanban";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+
 import Logo from "./Logo";
 
 const drawerWidth = 260;
@@ -48,7 +49,6 @@ const menuItems = [
     icon: <GroupIcon />,
     path: "/team",
   },
-  
   {
     title: "Calendar",
     icon: <CalendarMonthIcon />,
@@ -61,10 +61,45 @@ const menuItems = [
   },
 ];
 
-const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
+const Sidebar = ({
+  mobileOpen,
+  handleDrawerToggle,
+}) => {
+  const navigate = useNavigate();
+
+  /* =====================================================
+     LOGOUT
+  ====================================================== */
+
+  const handleLogout = () => {
+    /*
+     * Remove login/session data if you
+     * are storing any authentication data.
+     */
+
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user");
+
+    /*
+     * Redirect to Welcome screen
+     */
+
+    navigate("/", {
+      replace: true,
+    });
+  };
+
+  /* =====================================================
+     DRAWER CONTENT
+  ====================================================== */
+
   const drawerContent = (
     <>
+      {/* Logo */}
+
       <Logo />
+
+      {/* Navigation */}
 
       <List sx={{ mt: 2 }}>
         {menuItems.map((item) => (
@@ -72,10 +107,25 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
             key={item.title}
             component={NavLink}
             to={item.path}
+            onClick={() => {
+              /*
+               * Close mobile drawer after
+               * selecting a page.
+               */
+
+              if (
+                mobileOpen &&
+                handleDrawerToggle
+              ) {
+                handleDrawerToggle();
+              }
+            }}
             sx={{
               mx: 1.5,
               mb: 1,
               borderRadius: 1,
+
+              color: "#fff",
 
               "&.active": {
                 bgcolor: "primary.main",
@@ -85,42 +135,65 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
                   color: "#fff",
                 },
               },
+
+              "&:hover": {
+                bgcolor:
+                  "rgba(255,138,61,0.12)",
+              },
             }}
           >
             <ListItemIcon
               sx={{
-                color: "rgba(255,255,255,.8)",
+                color:
+                  "rgba(255,255,255,.8)",
                 minWidth: 42,
               }}
             >
               {item.icon}
             </ListItemIcon>
 
-            <ListItemText primary={item.title} />
+            <ListItemText
+              primary={item.title}
+            />
           </ListItemButton>
         ))}
       </List>
 
+      {/* Push Logout to bottom */}
+
       <Box sx={{ flexGrow: 1 }} />
+
+      {/* Logout */}
 
       <List>
         <ListItemButton
+          onClick={handleLogout}
           sx={{
             mx: 1.5,
             mb: 2,
             borderRadius: 1,
+
+            color: "#fff",
+
+            "&:hover": {
+              bgcolor:
+                "rgba(255,138,61,0.12)",
+            },
           }}
         >
           <ListItemIcon
             sx={{
-              color: "rgba(255,255,255,.8)",
+              color:
+                "rgba(255,255,255,.8)",
               minWidth: 42,
             }}
           >
             <LogoutIcon />
           </ListItemIcon>
 
-          <ListItemText primary="Logout" />
+          <ListItemText
+            primary="Logout"
+          />
         </ListItemButton>
       </List>
     </>
@@ -128,7 +201,10 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
 
   return (
     <>
-      {/* Mobile Drawer */}
+      {/* ===================================================
+          MOBILE DRAWER
+      ==================================================== */}
+
       <Drawer
         variant="temporary"
         open={mobileOpen}
@@ -152,7 +228,10 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
         {drawerContent}
       </Drawer>
 
-      {/* Desktop Drawer */}
+      {/* ===================================================
+          DESKTOP DRAWER
+      ==================================================== */}
+
       <Drawer
         variant="permanent"
         sx={{
